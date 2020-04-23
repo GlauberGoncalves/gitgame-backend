@@ -38,6 +38,10 @@ class User extends Model {
   questions(){
     return this.hasMany('App/Models/Forum/Question')
   }
+
+  institutions(){
+    return this.hasMany('App/Models/Institution/Institution')
+  }
 }
 
 module.exports = User

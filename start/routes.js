@@ -25,4 +25,6 @@ Route.group(() => {
   Route.resource('answer','AnswerController').apiOnly().except(['update'])
   Route.post('/answer/selectBestAnswer', 'AnswerController.selectBestAnswer')
 
+  Route.resource('institution','InstitutionController').apiOnly().except(['update'])
+
 }).middleware('auth')
