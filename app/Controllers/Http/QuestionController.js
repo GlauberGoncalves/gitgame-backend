@@ -21,7 +21,7 @@ class QuestionController {
    */
   async index () {
     const questions = await Question.query()
-      .with('user')
+      .with('answer')
       .fetch()
 
     return questions
@@ -36,7 +36,7 @@ class QuestionController {
    * @param {Response} ctx.response
    */
   async store ({ request, auth }) {
-    const data = request.only(['content'])
+    const data = request.only(['title','content'])
     const question = await Question.create({user_id: auth.user.id, ...data})
     return question
   }
@@ -51,7 +51,9 @@ class QuestionController {
    * @param {View} ctx.view
    */
   async show ({ params }) {
-    const question = await Question.findOrFail(params.id)
+    const question = await Question.query()
+      .with('answer')
+      .fetch()
     return question
   }
 
