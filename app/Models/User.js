@@ -42,6 +42,11 @@ class User extends Model {
   institutions(){
     return this.hasMany('App/Models/Institution/Institution')
   }
+
+  jobs(){
+    return this.belongsToMany('App/Models/Institution/Job')
+      .pivotTable('job_applications')
+  }
 }
 
 module.exports = User

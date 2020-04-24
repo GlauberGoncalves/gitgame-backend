@@ -7,7 +7,11 @@ class Job extends Model {
 
     institution(){
         return this.belongsTo('App/Models/Institution/Institution')
-    }    
+    }
+
+    users(){
+        return this.belongsToMany('App/Models/User')
+    }
 
 }
 
