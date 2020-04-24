@@ -1,18 +1,18 @@
 'use strict'
 
-const Institution = use('App/Models/Institution/Institution')
+const Job = use('App/Models/Institution/Job')
 
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
 /**
- * Resourceful controller for interacting with institutions
+ * Resourceful controller for interacting with jobs
  */
-class InstitutionController {
+class JobController {
   /**
-   * Show a list of all institutions.
-   * GET institutions
+   * Show a list of all jobs.
+   * GET jobs
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -20,28 +20,30 @@ class InstitutionController {
    * @param {View} ctx.view
    */
   async index ({auth}) {
-    return await Institution
+    return await Job
       .query()
-      .where({'user_id': auth.user.id})
-      .fetch()      
+      .innerJoin('institutions', 'institutions.id', 'jobs.institution_id')
+      .where({'institutions.user_id': auth.user.id})
+      .fetch()
   }
 
   /**
-   * Create/save a new institution.
-   * POST institutions
+   * Create/save a new job.
+   * POST jobs
    *
    * @param {object} ctx
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
   async store ({ request, auth }) {
-    const data = request.only(['name','description', 'image'])
-    const institution = await Institution.create({user_id: auth.user.id, ...data})
-    return institution
+    const data = request.only(['title','requirements', 'content', 'institution_id'])
+    const job = await Job.create({...data})
+    return job
   }
+
   /**
-   * Display a single institution.
-   * GET institutions/:id
+   * Display a single job.
+   * GET jobs/:id
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -49,50 +51,52 @@ class InstitutionController {
    * @param {View} ctx.view
    */
   async show ({ params }) {
-    const institution = await Institution.findOrFail(params.id)
+    //const job = await Job.findOrFail(params.id)
+    const job = await Job.query()
+      .with('institution')
+      .fetch()
 
-    return institution;
+    return job;
   }
 
-
   /**
-   * Update institution details.
-   * PUT or PATCH institutions/:id
+   * Update job details.
+   * PUT or PATCH jobs/:id
    *
    * @param {object} ctx
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update ({ request, params, auth }) {
-
+  async update ({ params, request, response }) {
     const data = request.only(['name','description', 'image'])
-    const institution = await Institution.findOrFail(params.id)
+    
+    const job = await Job.findOrFail(params.id)
 
     if(institution.user_id !== auth.user.id){
       return response.status(401)
     }
 
-    institution.merge(data)
-    await institution.save()
+    job.merge(data)
+    await job.save()
   }
 
   /**
-   * Delete a institution with id.
-   * DELETE institutions/:id
+   * Delete a job with id.
+   * DELETE jobs/:id
    *
    * @param {object} ctx
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
   async destroy ({ params, auth, response }) {
-    const institution = await Institution.findOrFail(params.id)
+    const job = await Job.findOrFail(params.id)
 
-    if(institution.user_id !== auth.user.id){
+    if(job.user_id !== auth.user.id){
       return response.status(401)
     }
 
-    await institution.delete()
+    await job.delete()
   }
 }
 
-module.exports = InstitutionController
+module.exports = JobController
