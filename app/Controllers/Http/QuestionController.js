@@ -51,10 +51,9 @@ class QuestionController {
    * @param {View} ctx.view
    */
   async show ({ params }) {
-    const question = await Question.query()
-      .with('answer')
-      .fetch()
-    return question
+    const question = await Question.findOrFail(params.id);
+
+    return question;
   }
 
   /**
