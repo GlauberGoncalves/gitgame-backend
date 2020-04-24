@@ -1,6 +1,7 @@
 'use strict'
 
-const Job = use('App/Models/Institution/Job')
+const Job  = use('App/Models/Institution/Job')
+const User = use('App/Models/User')
 
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
@@ -20,6 +21,7 @@ class JobController {
    * @param {View} ctx.view
    */
   async index ({auth}) {
+    console.log('entrou aqui')    
     return await Job
       .query()
       .innerJoin('institutions', 'institutions.id', 'jobs.institution_id')
@@ -50,12 +52,8 @@ class JobController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show ({ params }) {
-    //const job = await Job.findOrFail(params.id)
-    const job = await Job.query()
-      .with('institution')
-      .fetch()
-
+  async show ({ params }) {    
+    const job = await Job.findOrFail(params.id)
     return job;
   }
 
@@ -96,6 +94,17 @@ class JobController {
     }
 
     await job.delete()
+  }
+
+  async application({request, params, auth}){
+
+    const data = request.only(['job_id'])
+    const user = await User.find(auth.user.id)
+    const job = await Job.find(data.job_id)
+    
+    await user.jobs().attach(job.id)
+    await user.load('jobs')
+    return user    
   }
 }
 

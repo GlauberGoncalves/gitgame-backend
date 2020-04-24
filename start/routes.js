@@ -26,6 +26,7 @@ Route.group(() => {
   Route.post('/answer/selectBestAnswer', 'AnswerController.selectBestAnswer')
 
   Route.resource('institution','InstitutionController')
-  Route.resource('job','JobController').apiOnly().except(['update'])
-
+  Route.resource('job','JobController').apiOnly()
+  Route.post('/job/:id/application', 'JobController.application')
+  
 }).middleware('auth')
