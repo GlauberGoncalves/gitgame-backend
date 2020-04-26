@@ -46,6 +46,12 @@ class User extends Model {
   jobs(){
     return this.belongsToMany('App/Models/Institution/Job')
       .pivotTable('job_applications')
+      .withTimestamps()
+  }
+  
+  challenges(){
+    return this.belongsToMany('App/Models/Challenge')    
+      .pivotTable('user_challenge')
   }
 }
 
