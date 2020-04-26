@@ -12,6 +12,10 @@ class Institution extends Model {
     jobs(){
         return this.hasMany('App/Models/Institution/Job')
     }
+
+    challenges(){
+        return this.hasMany('App/Models/Challenge')
+    }
 }
 
 module.exports = Institution

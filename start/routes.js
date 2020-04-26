@@ -28,5 +28,7 @@ Route.group(() => {
   Route.resource('institution','InstitutionController')
   Route.resource('job','JobController').apiOnly()
   Route.post('/job/:id/application', 'JobController.application')
+
+  Route.resource('challenge','ChallengeController').apiOnly()
   
 }).middleware('auth')
