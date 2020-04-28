@@ -26,9 +26,12 @@ Route.group(() => {
   Route.post('/answer/selectBestAnswer', 'AnswerController.selectBestAnswer')
 
   Route.resource('institution','InstitutionController')
+  
   Route.resource('job','JobController').apiOnly()
   Route.post('/job/:id/application', 'JobController.application')
 
   Route.resource('challenge','ChallengeController').apiOnly()
+
+  Route.resource('repositories','RepositoriesController').apiOnly()
   
 }).middleware('auth')

@@ -53,6 +53,11 @@ class User extends Model {
     return this.belongsToMany('App/Models/Challenge')    
       .pivotTable('user_challenge')
   }
+
+  repositories(){
+    return this.hasMany('App/Models/Repositories')
+  }
+
 }
 
 module.exports = User
