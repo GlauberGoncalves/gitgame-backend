@@ -32,6 +32,6 @@ Route.group(() => {
 
   Route.resource('challenge','ChallengeController').apiOnly()
 
-  Route.resource('repositories','RepositoriesController').apiOnly()
+  Route.resource('repository','RepositoryController').apiOnly()
   
 }).middleware('auth')
