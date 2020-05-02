@@ -23,6 +23,15 @@ class Github {
             console.error(error);
         }
     }
+
+    async findLanguagesByRepo(repo){
+        try{
+            const url = `${this.path}/repos/${githubUser}/${repo}/languages`
+            return await axios.get(url); 
+        } catch (error){
+            console.error()
+        }
+    }
 }
 
 module.exports = Github

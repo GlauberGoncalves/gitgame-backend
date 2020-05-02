@@ -11,4 +11,4 @@ tmp
 database/*.sqlite
 
 # The postgres files
-postgres
+database/dbdocker

@@ -35,5 +35,5 @@ Route.group(() => {
   
 }).middleware('auth')
 
-Route.resource('repository','RepositoryController').apiOnly()
+Route.resource('repos','RepositoryController').apiOnly()
 Route.get('/github','RepositoryController.github')
