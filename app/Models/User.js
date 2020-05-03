@@ -62,6 +62,10 @@ class User extends Model {
     return this.hasOne('App/Models/Address')
   }
 
+  score(){
+    return this.hasOne('App/Models/Score')
+  }
+
 }
 
 module.exports = User
