@@ -31,7 +31,15 @@ class RepositoriesSchema extends Schema {
       table.string('forks_count')
       table.integer('open_issues_count')
       table.integer('stargazers_count')
-      table.string('default_branch')
+      table.string('default_branch')      
+      table.boolean('is_solution_challenge')
+      
+      table
+      .integer('user_challenge_id')
+      .unsigned()
+      .notNullable()
+      .references('user_challenge.id')
+      .onDelete('CASCADE')
 
       table.timestamps()
     })
